@@ -93,14 +93,16 @@ console.log("check");
 
       // If user not found, return error
       if (!user) {
-          return res.status(400).json({ success: false, message: 'Invalid credentials. User not found.' });
+          // Use 401 so SOC platform can detect web_login_attempt / bruteforce properly
+          return res.status(401).json({ success: false, message: 'Invalid credentials. User not found.' });
       }
 
       // Check if the password matches 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        // Use 401 so SOC platform can detect web_login_attempt / bruteforce properly
+        return res.status(401).json({ success: false, message: 'Invalid credentials' });
       }
 console.log("check");
       // Login success

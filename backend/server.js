@@ -12,6 +12,7 @@ const facultyRoutes = require('./routes/faculty');
 const certificateRoutes = require('./routes/certificate');
 const userRoutes = require('./routes/user');
 const path = require('path');
+const { sendToSoc } = require('./utils/socIngest');
 
 // Load environment variables
 dotenv.config();
@@ -32,6 +33,16 @@ connectDB()
 // Middleware
 app.use(cors());
 app.use(express.json()); // Simplified, no need for body-parser
+
+// Ship request metadata to SOC ingest API (non-blocking).
+// Configure via env: SOC_INGEST_URL, SOC_API_KEY, SOC_SITE
+app.use((req, res, next) => {
+  res.on('finish', () => {
+    // fire-and-forget
+    sendToSoc({ req, statusCode: res.statusCode });
+  });
+  next();
+});
 
 // Routes
 app.use('/api/auth', authRoute);
