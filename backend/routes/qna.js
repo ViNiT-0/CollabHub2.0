@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Question = require('../models/Question');
-const Answer = require('../models/answer');
+const Answer = require('../models/Answer');
 const User = require('../models/User');
 
 // Post a question

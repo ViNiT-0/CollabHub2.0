@@ -33,6 +33,7 @@ connectDB()
 // Middleware
 app.use(cors());
 app.use(express.json()); // Simplified, no need for body-parser
+app.use(express.urlencoded({ extended: true }));
 
 // Ship request metadata to SOC ingest API (non-blocking).
 // Configure via env: SOC_INGEST_URL, SOC_API_KEY, SOC_SITE
@@ -55,13 +56,18 @@ app.use('/api/faculty', facultyRoutes);
 app.use('/api/certificates', certificateRoutes);
 app.use('/api/user', userRoutes);
 
+// Serve CollabHub frontend (HTML/CSS/JS) from the repo's `frontend/` folder.
+// This makes URLs like `/pages/home.html` work without a separate web server.
+app.use(express.static(path.join(__dirname, '..', 'frontend')));
 
 // Serve static files from the "uploads" folder
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Test route
 app.get('/', (req, res) => {
-  res.send('Server is ready');
+  // Redirect (not sendFile) so the browser URL base stays `/pages/...`,
+  // keeping relative links inside `home.html` working.
+  res.redirect('/pages/home.html');
 });
 
 // Start the server

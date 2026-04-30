@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Certificate = require('../models/Certificate'); // You'll create this schema
+const Certificate = require('../models/certificate'); // You'll create this schema
 const Event = require('../models/Event');
 const User = require('../models/User');
 

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC Dashboard - CollabHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/components/navbar.css">
+    <link rel="stylesheet" href="../css/pages/home.css">
+    <link rel="stylesheet" href="../css/pages/soc-dashboard.css">
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <main class="container soc-layout">
+        <section class="hero soc-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>SOAR / SOC Dashboard</h1>
+                    <p>
+                        Your CollabHub server forwards request logs to your SOC ingest API.
+                        Open Kibana to explore <code>web-logs</code> and <code>soc-alerts</code>.
+                    </p>
+                    <div class="hero-buttons mt-3">
+                        <a class="btn btn-primary" href="http://localhost:5601/app/discover" target="_blank" rel="noopener noreferrer">
+                            Open Kibana
+                        </a>
+                        <a class="btn btn-secondary" href="http://localhost:5601" target="_blank" rel="noopener noreferrer">
+                            Kibana Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="soc-kibana-section">
+            <h2>Embedded Kibana (optional)</h2>
+            <p>
+                If the embed is blocked by browser security headers, use the buttons above.
+            </p>
+            <div class="soc-iframe-wrap">
+                <iframe
+                    src="http://localhost:5601/app/discover"
+                    title="Kibana Discover"
+                ></iframe>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+    <script>
+        fetch('../components/navbar.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('navbar').innerHTML = data);
+
+        fetch('../components/footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+    </script>
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>
+
